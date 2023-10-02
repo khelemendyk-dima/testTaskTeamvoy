@@ -1,7 +1,9 @@
 package com.my.shop.utils;
 
 import com.my.shop.dtos.ProductDTO;
+import com.my.shop.dtos.UserDTO;
 import com.my.shop.models.Product;
+import com.my.shop.models.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -30,5 +32,9 @@ public class ConvertorUtil {
         }
 
         return productDTOS;
+    }
+
+    public UserDTO convertToUserDTO(User user) {
+        return modelMapper.map(user, UserDTO.class);
     }
 }
