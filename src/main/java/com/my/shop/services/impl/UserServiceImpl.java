@@ -4,7 +4,6 @@ import com.my.shop.exceptions.NotFoundException;
 import com.my.shop.exceptions.UserAlreadyExistsException;
 import com.my.shop.models.Role;
 import com.my.shop.models.User;
-import com.my.shop.payloads.requests.RegistrationRequest;
 import com.my.shop.repositories.UserRepository;
 import com.my.shop.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,17 +26,17 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User save(RegistrationRequest request) {
-        Optional<User> userFromDB = userRepository.findByUsername(request.getUsername());
+    public User save(String username, String password) {
+        Optional<User> userFromDB = userRepository.findByUsername(username);
 
         if (userFromDB.isPresent()) {
             throw new UserAlreadyExistsException(
-                    String.format("User with username '%s' is already in use", request.getUsername()));
+                    String.format("User with username '%s' is already in use", username));
         }
 
         User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
         user.setRole(Role.ROLE_CLIENT);
 
         return userRepository.save(user);

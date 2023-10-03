@@ -31,6 +31,6 @@ public class AuthServiceImpl implements AuthService {
             throw new PasswordMismatchException("Passwords doesn't match");
         }
 
-        return userService.save(request);
+        return userService.save(request.getUsername(), request.getPassword());
     }
 }
