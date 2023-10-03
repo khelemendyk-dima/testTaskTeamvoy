@@ -1,5 +1,6 @@
 package com.my.shop.services.impl;
 
+import com.my.shop.exceptions.NotFoundException;
 import com.my.shop.exceptions.UserAlreadyExistsException;
 import com.my.shop.models.Role;
 import com.my.shop.models.User;
@@ -51,6 +52,12 @@ public class UserServiceImpl implements UserService {
         }
 
         return user.get();
+    }
+
+    @Override
+    public User findById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(String.format("User with id '%d' not found", userId)));
     }
 
     @Transactional

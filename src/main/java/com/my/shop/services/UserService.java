@@ -7,4 +7,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService extends UserDetailsService {
     User save(RegistrationRequest request);
     User findByUsername(String username);
+    User findById(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.my.shop.services.impl;
 
+import com.my.shop.exceptions.NotFoundException;
 import com.my.shop.exceptions.ProductAlreadyExistsException;
 import com.my.shop.models.Product;
 import com.my.shop.repositories.ProductRepository;
@@ -32,5 +33,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public Product findById(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException(String.format("Product with id '%d' not found", productId)));
     }
 }
