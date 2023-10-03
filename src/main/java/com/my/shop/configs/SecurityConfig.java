@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/v1/products").hasRole("MANAGER")
                 .antMatchers(HttpMethod.GET, "/api/v1/products").hasAnyRole("MANAGER", "CLIENT")
+                .antMatchers("/api/v1/orders/**").hasRole("CLIENT")
                 .antMatchers("/api/v1/login", "/api/v1/registration").permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
