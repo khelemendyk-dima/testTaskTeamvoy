@@ -1,8 +1,6 @@
 package com.my.shop.exceptions.handler;
 
-import com.my.shop.exceptions.PasswordMismatchException;
-import com.my.shop.exceptions.ProductAlreadyExistsException;
-import com.my.shop.exceptions.UserAlreadyExistsException;
+import com.my.shop.exceptions.*;
 import com.my.shop.payloads.responses.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,25 @@ import java.util.Objects;
 @Slf4j
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandler {
+    @ExceptionHandler(NotEnoughProductException.class)
+    public ResponseEntity<ErrorResponse> handleNotEnoughProductException(NotEnoughProductException e) {
+        log.debug(e.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponse(
+                System.currentTimeMillis(),
+                e.getMessage()
+        ), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException e) {
+        log.debug(e.getMessage());
+
+        return new ResponseEntity<>(new ErrorResponse(
+                System.currentTimeMillis(),
+                e.getMessage()
+        ), HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(value = { ProductAlreadyExistsException.class,
                                 UserAlreadyExistsException.class})
